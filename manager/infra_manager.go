@@ -2,9 +2,11 @@ package manager
 
 import (
 	"fmt"
+	"os"
 	"simple-payment/config"
 
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 type InfraManager interface {
@@ -21,6 +23,7 @@ func (i *infraManager) SqlDB() *sqlx.DB {
 }
 
 func (i *infraManager) initDB() {
+	os.Setenv("PGSSLMODE", "disable")
 	db, err := sqlx.Connect("postgres", i.config.DataSourceName)
 
 	if err != nil {
