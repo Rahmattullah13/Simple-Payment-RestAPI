@@ -23,6 +23,7 @@ func (s *Server) initController() {
 	tokenMdw := middleware.NewTokenValidator(s.tokenService)
 	controller.NewUserController(publicRoute, s.useCaseManager.UserUseCase())
 	controller.NewCustomerController(publicRoute, s.useCaseManager.CustomerUseCase(), tokenMdw)
+	controller.NewMerchantController(publicRoute, s.useCaseManager.MerchantUseCase(), tokenMdw)
 }
 
 func (s *Server) Run() {

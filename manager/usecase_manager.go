@@ -8,6 +8,7 @@ import (
 type UseCaseManager interface {
 	UserUseCase() usecase.UserUseCase
 	CustomerUseCase() usecase.CustomerUseCase
+	MerchantUseCase() usecase.MerchantUseCase
 }
 
 type useCaseManager struct {
@@ -21,6 +22,10 @@ func (u *useCaseManager) UserUseCase() usecase.UserUseCase {
 
 func (u *useCaseManager) CustomerUseCase() usecase.CustomerUseCase {
 	return usecase.NewCustomerUseCase(u.repoManager.CustomerRepository())
+}
+
+func (u *useCaseManager) MerchantUseCase() usecase.MerchantUseCase {
+	return usecase.NewMerchantUseCase(u.repoManager.MerchantRepository())
 }
 
 func NewUseCaseManager(repoManager RepositoryManager, tokenService authenticator.AccessToken) UseCaseManager {
