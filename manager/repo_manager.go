@@ -1,11 +1,16 @@
 package manager
 
-import "simple-payment/repository"
+import (
+	"simple-payment/repository"
+)
 
 type RepositoryManager interface {
 	UserRepository() repository.UserRepository
 	CustomerRepository() repository.CustomerRepository
 	MerchantRepository() repository.MerchantRepository
+	BankRepository() repository.BankRepository
+	PaymentRepository() repository.PaymentRepository
+	LogHistoryRepository() repository.LogHistoryRepository
 }
 
 type repositoryManager struct {
@@ -22,6 +27,18 @@ func (rm *repositoryManager) CustomerRepository() repository.CustomerRepository 
 
 func (rm *repositoryManager) MerchantRepository() repository.MerchantRepository {
 	return repository.NewMerchantRerpository(rm.infra.SqlDB())
+}
+
+func (rm *repositoryManager) BankRepository() repository.BankRepository {
+	return repository.NewBankRepository(rm.infra.SqlDB())
+}
+
+func (rm *repositoryManager) PaymentRepository() repository.PaymentRepository {
+	return repository.NewPaymentRepository(rm.infra.SqlDB())
+}
+
+func (rm *repositoryManager) LogHistoryRepository() repository.LogHistoryRepository {
+	return repository.NewLogHistoryRepository(rm.infra.SqlDB())
 }
 
 func NewRepositoryManager(infra InfraManager) RepositoryManager {

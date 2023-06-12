@@ -24,6 +24,9 @@ func (s *Server) initController() {
 	controller.NewUserController(publicRoute, s.useCaseManager.UserUseCase())
 	controller.NewCustomerController(publicRoute, s.useCaseManager.CustomerUseCase(), tokenMdw)
 	controller.NewMerchantController(publicRoute, s.useCaseManager.MerchantUseCase(), tokenMdw)
+	controller.NewBankController(publicRoute, s.useCaseManager.BankUseCase(), tokenMdw)
+	controller.NewPaymentController(publicRoute, s.useCaseManager.PaymentUseCase(), tokenMdw)
+	controller.NewLogHistoryController(publicRoute, s.useCaseManager.LogHistoryUseCase(), tokenMdw)
 }
 
 func (s *Server) Run() {
