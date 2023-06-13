@@ -17,6 +17,12 @@ type PaymentController struct {
 	tokenMdw       middleware.AuthTokenMiddleware
 }
 
+// @Summary Create new payment
+// @Tags payment
+// @Param string body model.PaymentRequest{amount=int} true "Payment"
+// @Success 200 {object} model.PaymentResponse
+// @Failure 400
+// @Router /api/payments [post]
 func (pc *PaymentController) createNewPayment(ctx *gin.Context) {
 	newPayment := new(model.Payment)
 
@@ -47,6 +53,10 @@ func (pc *PaymentController) createNewPayment(ctx *gin.Context) {
 	})
 }
 
+// @Summary Get all payments
+// @Tags payment
+// @success 200 {object} model.PaymentResponse{data=[]model.Payment}
+// @Router /api/payments [get]
 func (pc *PaymentController) getPayments(ctx *gin.Context) {
 	payments, err := pc.paymentUseCase.Payments()
 	if err != nil {
@@ -63,6 +73,11 @@ func (pc *PaymentController) getPayments(ctx *gin.Context) {
 	})
 }
 
+// @Summary Get payment by ID
+// @Tags payment
+// @Param id path int true "Payment ID"
+// @Success 200 {object} model.Payment
+// @Router /api/payments/{id} [get]
 func (pc *PaymentController) getPaymentById(ctx *gin.Context) {
 	paymentId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

@@ -8,6 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get all histories
+// @Tags logs history
+// @success 200 {object} model.LogHistoryResponse{data=[]model.LogHistory}
+// @Router /api/logs/history [get]
 type LogHistoryController struct {
 	rg                *gin.RouterGroup
 	logHistoryUseCase usecase.LogHistoryUsaCase

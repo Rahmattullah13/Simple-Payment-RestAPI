@@ -14,6 +14,12 @@ type UserController struct {
 	userUseCase usecase.UserUseCase
 }
 
+// @Summary Create new user
+// @Tags Auth user
+// @Param string body model.UserRequest true "User"
+// @Success 200
+// @Failure 400
+// @Router /api/auth/users [post]
 func (uc *UserController) createNewUser(ctx *gin.Context) {
 	newUser := new(model.User)
 
@@ -44,6 +50,12 @@ func (uc *UserController) createNewUser(ctx *gin.Context) {
 	})
 }
 
+// @Summary Login user
+// @Tags Auth user
+// @Param string body model.UserRequest true "User"
+// @Success 200
+// @Failure 400
+// @Router /api/session [post]
 func (uc *UserController) loginUser(ctx *gin.Context) {
 	var userCredential model.UserCredential
 	err := ctx.ShouldBindJSON(&userCredential)
@@ -70,6 +82,11 @@ func (uc *UserController) loginUser(ctx *gin.Context) {
 	})
 }
 
+// @Summary Logout user
+// @Tags Auth user
+// @Success 200
+// @Failure 400
+// @Router /api/session/logout [post]
 func (uc *UserController) logoutUser(ctx *gin.Context) {
 	ctx.SetCookie("token", "", -1, "/", "localhost", false, true)
 

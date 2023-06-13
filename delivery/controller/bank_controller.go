@@ -17,6 +17,10 @@ type BankController struct {
 	tokenMdw    middleware.AuthTokenMiddleware
 }
 
+// @Summary Get all banks
+// @Tags Bank endpoints
+// @success 200 {object} model.BankResponse{data=[]model.Bank}
+// @Router /api/banks [get]
 func (bc *BankController) getBanks(ctx *gin.Context) {
 
 	banks, err := bc.bankUseCase.Banks()
@@ -34,6 +38,12 @@ func (bc *BankController) getBanks(ctx *gin.Context) {
 	})
 }
 
+// @Summary Create new bank
+// @Tags Bank endpoints
+// @Param string body model.BankRequest true "Bank"
+// @Success 200 {object} model.BankResponse
+// @Failure 400
+// @Router /api/banks [post]
 func (bc *BankController) createNewBank(ctx *gin.Context) {
 	newBank := new(model.Bank)
 
@@ -64,6 +74,11 @@ func (bc *BankController) createNewBank(ctx *gin.Context) {
 	})
 }
 
+// @Summary Get bank by ID
+// @Tags Bank endpoints
+// @Param id path int true "Bank ID"
+// @Success 200 {object} model.Bank
+// @Router /api/banks/{id} [get]
 func (bc *BankController) getBankById(ctx *gin.Context) {
 	bankId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -95,6 +110,11 @@ func (bc *BankController) getBankById(ctx *gin.Context) {
 	})
 }
 
+// @Summary Delete bank by ID
+// @Tags Bank endpoints
+// @Param id path int true "Bank ID"
+// @Success 200
+// @Router /api/banks/{id} [delete]
 func (bc *BankController) deleteBankById(ctx *gin.Context) {
 	bankId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

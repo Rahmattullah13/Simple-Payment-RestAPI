@@ -1,0 +1,455 @@
+definitions:
+  model.Bank:
+    properties:
+      balance:
+        type: integer
+      bank_account_number:
+        type: string
+      bank_id:
+        type: string
+      name:
+        type: string
+    type: object
+  model.BankRequest:
+    properties:
+      bank_account_number:
+        example: "12345678"
+        type: string
+      name:
+        example: Bank BCAX
+        type: string
+    type: object
+  model.BankResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  model.Customer:
+    properties:
+      balance:
+        type: integer
+      created_at:
+        type: string
+      customer_id:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model.CustomerRequest:
+    properties:
+      name:
+        example: John Doe
+        type: string
+      user_id:
+        example: "1"
+        type: string
+    type: object
+  model.CustomerResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  model.Merchant:
+    properties:
+      balance:
+        type: integer
+      created_at:
+        type: string
+      merchant_id:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+  model.MerchantRequest:
+    properties:
+      name:
+        example: John Doe store
+        type: string
+      user_id:
+        example: "1"
+        type: string
+    type: object
+  model.MerchantResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  model.Payment:
+    properties:
+      amount:
+        type: integer
+      bank_account_number:
+        type: string
+      created_at:
+        type: string
+      payment_id:
+        type: string
+      receiver_id:
+        type: string
+      sender_id:
+        type: string
+    type: object
+  model.PaymentRequest:
+    properties:
+      amount:
+        example: 7000
+        type: integer
+      bank_account_number:
+        example: "12345678"
+        type: string
+      receiver_id:
+        example: "1"
+        type: string
+      sender_id:
+        example: "1"
+        type: string
+    type: object
+  model.PaymentResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
+  model.TopUpRequest:
+    properties:
+      balance:
+        example: 50000
+        type: integer
+      customer_id:
+        example: "1"
+        type: string
+    type: object
+  model.UserRequest:
+    properties:
+      email:
+        example: johndoe@mail.com
+        type: string
+      password:
+        example: qwerty
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/auth/users:
+    post:
+      parameters:
+      - description: User
+        in: body
+        name: string
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRequest'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Create new user
+      tags:
+      - Auth user
+  /api/banks:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.BankResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Bank'
+                  type: array
+              type: object
+      summary: Get all banks
+      tags:
+      - Bank endpoints
+    post:
+      parameters:
+      - description: Bank
+        in: body
+        name: string
+        required: true
+        schema:
+          $ref: '#/definitions/model.BankRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BankResponse'
+        "400":
+          description: Bad Request
+      summary: Create new bank
+      tags:
+      - Bank endpoints
+  /api/banks/{id}:
+    delete:
+      parameters:
+      - description: Bank ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: Delete bank by ID
+      tags:
+      - Bank endpoints
+    get:
+      parameters:
+      - description: Bank ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Bank'
+      summary: Get bank by ID
+      tags:
+      - Bank endpoints
+  /api/customers:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.CustomerResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Customer'
+                  type: array
+              type: object
+      summary: Get all customers
+      tags:
+      - customer
+    post:
+      parameters:
+      - description: Customer
+        in: body
+        name: string
+        required: true
+        schema:
+          $ref: '#/definitions/model.CustomerRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CustomerResponse'
+        "400":
+          description: Bad Request
+      summary: Create new customer
+      tags:
+      - customer
+  /api/customers/{id}:
+    delete:
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: Delete customer by ID
+      tags:
+      - customer
+    get:
+      parameters:
+      - description: Customer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Customer'
+      summary: Get customer by ID
+      tags:
+      - customer
+  /api/customers/id:
+    put:
+      parameters:
+      - description: TopUp
+        in: body
+        name: object
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/definitions/model.TopUpRequest'
+          - properties:
+              balance:
+                type: integer
+            type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Customer'
+      summary: Topup customer by ID
+      tags:
+      - customer
+  /api/merchants:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.MerchantResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Merchant'
+                  type: array
+              type: object
+      summary: Get all merchants
+      tags:
+      - merchant
+    post:
+      parameters:
+      - description: Merchant
+        in: body
+        name: string
+        required: true
+        schema:
+          $ref: '#/definitions/model.MerchantRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MerchantResponse'
+        "400":
+          description: Bad Request
+      summary: Create new merchant
+      tags:
+      - merchant
+  /api/merchants/{id}:
+    delete:
+      parameters:
+      - description: Merchant ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      summary: Delete merchant by ID
+      tags:
+      - merchant
+    get:
+      parameters:
+      - description: Merchant ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Merchant'
+      summary: Get merchant by ID
+      tags:
+      - merchant
+  /api/payments:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.PaymentResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Payment'
+                  type: array
+              type: object
+      summary: Get all payments
+      tags:
+      - payment
+    post:
+      parameters:
+      - description: Payment
+        in: body
+        name: string
+        required: true
+        schema:
+          allOf:
+          - $ref: '#/definitions/model.PaymentRequest'
+          - properties:
+              amount:
+                type: integer
+            type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PaymentResponse'
+        "400":
+          description: Bad Request
+      summary: Create new payment
+      tags:
+      - payment
+  /api/payments/{id}:
+    get:
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Payment'
+      summary: Get payment by ID
+      tags:
+      - payment
+  /api/session:
+    post:
+      parameters:
+      - description: User
+        in: body
+        name: string
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRequest'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Login user
+      tags:
+      - Auth user
+  /api/session/logout:
+    post:
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+      summary: Logout user
+      tags:
+      - Auth user
+swagger: "2.0"

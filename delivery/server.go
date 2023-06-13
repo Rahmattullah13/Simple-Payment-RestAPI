@@ -8,7 +8,11 @@ import (
 	"simple-payment/manager"
 	"simple-payment/util/authenticator"
 
+	_ "simple-payment/docs"
+
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Server struct {
@@ -31,6 +35,8 @@ func (s *Server) initController() {
 
 func (s *Server) Run() {
 	s.initController()
+
+	s.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	if err := s.engine.Run(s.host); err != nil {
 		panic(err)

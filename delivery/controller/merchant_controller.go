@@ -17,6 +17,12 @@ type MerchantController struct {
 	tokenMdw        middleware.AuthTokenMiddleware
 }
 
+// @Summary Create new merchant
+// @Tags merchant
+// @Param string body model.MerchantRequest true "Merchant"
+// @Success 200 {object} model.MerchantResponse
+// @Failure 400
+// @Router /api/merchants [post]
 func (mc *MerchantController) createNewMerchant(ctx *gin.Context) {
 	newMerchant := new(model.Merchant)
 
@@ -51,6 +57,10 @@ func (mc *MerchantController) createNewMerchant(ctx *gin.Context) {
 	})
 }
 
+// @Summary Get all merchants
+// @Tags merchant
+// @success 200 {object} model.MerchantResponse{data=[]model.Merchant}
+// @Router /api/merchants [get]
 func (mc *MerchantController) getMerchants(ctx *gin.Context) {
 	merchants, err := mc.merchantUseCase.Merchants()
 	if err != nil {
@@ -67,6 +77,11 @@ func (mc *MerchantController) getMerchants(ctx *gin.Context) {
 	})
 }
 
+// @Summary Get merchant by ID
+// @Tags merchant
+// @Param id path int true "Merchant ID"
+// @Success 200 {object} model.Merchant
+// @Router /api/merchants/{id} [get]
 func (mc *MerchantController) getMerchantById(ctx *gin.Context) {
 	merchantId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -98,6 +113,11 @@ func (mc *MerchantController) getMerchantById(ctx *gin.Context) {
 	})
 }
 
+// @Summary Delete merchant by ID
+// @Tags merchant
+// @Param id path int true "Merchant ID"
+// @Success 200
+// @Router /api/merchants/{id} [delete]
 func (cc *MerchantController) deleteMerchantById(ctx *gin.Context) {
 	merchantId, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
