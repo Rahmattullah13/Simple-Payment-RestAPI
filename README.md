@@ -22,7 +22,7 @@ Instalasi
 
 ## Instalasi
 
-1. Pastikan Anda memiliki Go terinstal di sistem Anda. Untuk informasi lebih lanjut, kunjungi [dokumentasi](https://golang.org/doc/install).
+1. Pastikan Anda memiliki Go terinstal di sistem Anda. Untuk informasi lebih lanjut, kunjungi [dokumentasi Golang](https://golang.org/doc/install).
 
 2. Clone repositori ini ke dalam direktori lokal Anda:
 

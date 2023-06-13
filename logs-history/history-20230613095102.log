@@ -1,0 +1,6 @@
+[GIN] 2023/06/13 - 09:51:09 | 200 |       5.092ms |       127.0.0.1 | GET      "/swagger/index.html"
+[GIN] 2023/06/13 - 09:51:09 | 200 |       2.756ms |       127.0.0.1 | GET      "/swagger/swagger-ui.css"
+[GIN] 2023/06/13 - 09:51:09 | 200 |      4.5466ms |       127.0.0.1 | GET      "/swagger/swagger-ui-bundle.js"
+[GIN] 2023/06/13 - 09:51:09 | 200 |      1.1135ms |       127.0.0.1 | GET      "/swagger/swagger-ui-standalone-preset.js"
+[GIN] 2023/06/13 - 09:51:10 | 200 |      1.4076ms |       127.0.0.1 | GET      "/swagger/doc.json"
+[GIN] 2023/06/13 - 09:51:10 | 200 |            0s |       127.0.0.1 | GET      "/swagger/favicon-32x32.png"
